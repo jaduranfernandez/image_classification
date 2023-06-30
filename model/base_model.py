@@ -6,7 +6,6 @@ import os
 
 class NeuralNetwork(nn.Module):
     ''' Models a simple Convolutional Neural Network'''
-
     def __init__(self, filename = "model"):
         """ Initialize the neural network """
         self.model_name = filename
@@ -21,6 +20,7 @@ class NeuralNetwork(nn.Module):
         self.fc1 = nn.Linear(16 * 5 * 5, 120)   # 16 channels with 5x5 filters
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
+
 
     def forward(self, x):
         ''' the forward propagation algorithm '''

@@ -9,7 +9,7 @@ def imshow(img):
     img = img / 2 + 0.5 # unnormalize
     npimg = img.numpy() # convert to numpy objects
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
-
+    return plt
 
 
 class DataLoader():
@@ -50,4 +50,4 @@ class DataLoader():
             ax.set_title(self.classes[label])
             plt.axis("off")
             imshow(img)
-        plt.show()
+        return plt
