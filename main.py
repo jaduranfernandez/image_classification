@@ -1,12 +1,12 @@
-from data_manipulation.data_loader import DataLoader
+from data_manipulation.data_loaders import CifarDataLoader
 from model.base_model import NeuralNetwork
 from model.trainer import Trainer
 import torch
 
-data = DataLoader()
-#data.show_subplot(4,4)
+data = CifarDataLoader(validation_split=0.1)
+print(data.valid_sampler)
 
-model = NeuralNetwork()
+""" model = NeuralNetwork()
 print(model)
 
 criterion = torch.nn.CrossEntropyLoss()
@@ -21,3 +21,4 @@ for t in range(epochs):
     trainer.train(data.trainloader)
     trainer.test(data.testloader)
 print("Done!")
+"""
