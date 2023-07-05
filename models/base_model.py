@@ -5,7 +5,9 @@ import os
 
 
 class NeuralNetwork(nn.Module):
-    ''' Models a simple Convolutional Neural Network'''
+    """ 
+    Models a simple Convolutional Neural Network with 2 Conv Layers & 2 FC
+    """
     def __init__(self, filename = "model"):
         """ Initialize the neural network """
         self.model_name = filename

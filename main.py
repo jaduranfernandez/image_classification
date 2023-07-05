@@ -1,24 +1,22 @@
 from data_manipulation.data_loaders import CifarDataLoader
-from model.base_model import NeuralNetwork
-from model.trainer import Trainer
-import torch
+from models.LeNet_5 import LeNet_5
+from torch.nn import CrossEntropyLoss
+from torch.optim import SGD
+from models.trainer import Trainer
 
-data = CifarDataLoader(validation_split=0.1)
-print(data.valid_sampler)
 
-""" model = NeuralNetwork()
+model = LeNet_5(n_inputs=3, n_classes=10)
 print(model)
-
-criterion = torch.nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-
-trainer = Trainer(model, criterion, optimizer)
+data = CifarDataLoader(validation_split=0.1)
 
 
-epochs = 2
-for t in range(epochs):
-    print(f"Epoch {t+1}\n-------------------------------")
-    trainer.train(data.trainloader)
-    trainer.test(data.testloader)
-print("Done!")
+criterion = CrossEntropyLoss()
+optimizer = SGD(model.parameters(), lr=0.001, momentum=0.9)
+
+
+model.train()
+""" trainer = Trainer(model, criterion, optimizer)
+#print(data.valid_sampler)
+
+trainer.train(data)
 """
