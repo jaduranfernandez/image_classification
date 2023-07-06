@@ -7,7 +7,7 @@ from models.trainer import Trainer
 
 model = LeNet_5(n_inputs=3, n_classes=10)
 print(model)
-data = CifarDataLoader(validation_split=0.1)
+data = CifarDataLoader()
 
 
 criterion = CrossEntropyLoss()
@@ -15,8 +15,7 @@ optimizer = SGD(model.parameters(), lr=0.001, momentum=0.9)
 
 
 model.train()
-""" trainer = Trainer(model, criterion, optimizer)
+trainer = Trainer(model, criterion, optimizer)
 #print(data.valid_sampler)
 
-trainer.train(data)
-"""
+trainer.train(data.trainloader)
