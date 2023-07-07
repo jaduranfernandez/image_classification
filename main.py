@@ -1,21 +1,26 @@
-from data_manipulation.data_loaders import CifarDataLoader
-from models.LeNet_5 import LeNet_5
+from data_manipulation.cifar_10 import CifarDataLoader
+from models import LeNet_5, VGG_16
 from torch.nn import CrossEntropyLoss
 from torch.optim import SGD
-from models.trainer import Trainer
+from trainer.trainer import Trainer
 
 
-model = LeNet_5(n_inputs=3, n_classes=10)
-print(model)
-data = CifarDataLoader()
+def main():
+    data = CifarDataLoader()
+
+    #model = LeNet_5(n_inputs=3, n_classes=10)
+    model = VGG_16(n_classes=10)
+    criterion = CrossEntropyLoss()
+    optimizer = SGD(model.parameters(), lr=0.001, momentum=0.9)
 
 
-criterion = CrossEntropyLoss()
-optimizer = SGD(model.parameters(), lr=0.001, momentum=0.9)
+    trainer = Trainer(model, criterion, optimizer)
 
 
-model.train()
-trainer = Trainer(model, criterion, optimizer)
-#print(data.valid_sampler)
+    trainer.train(data.trainloader)
+    trainer.test(data.testloader)
 
-trainer.train(data.trainloader)
+    model.save_model()
+
+if __name__ == '__main__':
+    main()
