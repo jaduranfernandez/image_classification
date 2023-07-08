@@ -3,7 +3,7 @@ __pycache__/
 
 # datasets
 data/
-
+trained_models/
 
 # editor, os cache directory
 .vscode/

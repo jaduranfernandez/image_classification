@@ -1,15 +1,24 @@
 import torch
-
+from utils import prepare_device
 
 class Trainer:
     def __init__(self, model, criterion, optimizer):
         self.model = model
         self.criterion = criterion
         self.optimizer = optimizer
+        
+        self.device = torch.device("cpu")
+        if torch.cuda.is_available():
+            self.device = torch.device("cuda")
+            print("CUDA está disponible")
 
+        self.model = model.to(self.device)
+        
     def train(self, dataloader):
         size = len(dataloader.dataset)
         for batch, (X, y) in enumerate(dataloader):
+            X = X.to(self.device)
+            y = y.to(self.device)
             pred = self.model(X)    #   Makes a prediction given a specified data(X)
             loss = self.criterion(pred, y)
             self.optimizer.zero_grad()
@@ -26,6 +35,8 @@ class Trainer:
 
         with torch.no_grad():
             for X, y in dataloader:
+                X = X.to(self.device)
+                y = y.to(self.device)
                 pred = self.model(X)
                 test_loss += self.criterion(pred, y).item()
                 correct += (pred.argmax(1) == y).type(torch.float).sum().item()
