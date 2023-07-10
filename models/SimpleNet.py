@@ -1,10 +1,8 @@
 import torch.nn as nn # basic building block for neural neteorks
-import torch
-import torch.nn.functional as F # import convolution functions like Relu
-import os
+from base import BaseModel
 
 
-class SimpleNet(nn.Module):
+class SimpleNet(BaseModel):
     """ 
     This model consists of 5 layers
     - 13 convolution layers with kernel 3x3
@@ -15,9 +13,9 @@ class SimpleNet(nn.Module):
     """
     def __init__(self, filename = "SimpleNet", n_classes = 10):
         """ Initialize the neural network """
-        self.model_name = filename
         super(SimpleNet, self).__init__()
-
+        self.model_name = filename
+        self.features_output_dim = 32 * 1 * 1
 
         self.features = nn.Sequential(
             nn.Conv2d(3, 6, kernel_size = 5),
@@ -40,13 +38,3 @@ class SimpleNet(nn.Module):
             nn.Dropout(),
             nn.Linear(84, n_classes)
         )
-
-    def forward(self, x):
-        """ the forward propagation algorithm """        
-        x = self.features(x)
-        x = x.view(-1, 32 * 1 * 1)
-        x = self.classifier(x)
-        return x
-
-    def save_model(self):        
-        torch.save(self, self.model_name + ".pth")

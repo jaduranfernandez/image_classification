@@ -6,12 +6,7 @@ class Trainer:
         self.model = model
         self.criterion = criterion
         self.optimizer = optimizer
-        
-        self.device = torch.device("cpu")
-        if torch.cuda.is_available():
-            self.device = torch.device("cuda")
-            print("CUDA está disponible")
-
+        self.device = prepare_device()
         self.model = model.to(self.device)
         
     def train(self, dataloader):

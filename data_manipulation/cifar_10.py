@@ -2,6 +2,12 @@ from base.base_data_loader import BaseDataLoader
 from torchvision import datasets, transforms
 
 
+def cifar10_transform():
+    transform = transforms.Compose( # composing several transforms together
+        [transforms.Resize((32,32)),
+        transforms.ToTensor(), # to tensor object
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) # mean = 0.5, std = 0.5
+    return transform
 
 class CifarDataLoader(BaseDataLoader):
     """
