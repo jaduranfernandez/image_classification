@@ -1,7 +1,5 @@
 import torch.nn as nn # basic building block for neural neteorks
 import torch
-import torch.nn.functional as F # import convolution functions like Relu
-import os
 
 
 class BaseModel(nn.Module):
