@@ -21,7 +21,8 @@ To run this project, the following dependencies are required:
 - Numpy (version 1.23.4 or higher)
 - Matplotlib (version 1.23.4 or higher)
 - Torchvision (version 0.15.2 or higher)
-- Cuda 1.18
+- Seaborn
+- Cuda 1.18 (optional for better performance)
 
 
 ## Usage

@@ -15,26 +15,38 @@ class SimpleNet(BaseModel):
         """ Initialize the neural network """
         super(SimpleNet, self).__init__()
         self.model_name = filename
-        self.features_output_dim = 32 * 1 * 1
+        self.features_output_dim = 128 * 4 * 4
 
         self.features = nn.Sequential(
-            nn.Conv2d(3, 6, kernel_size = 5),
+            nn.Conv2d(3, 32, kernel_size = 3, padding = 1),
             nn.ReLU(),
+            nn.BatchNorm2d(32),
+            nn.Conv2d(32, 32, kernel_size = 3, padding = 1),
+            nn.ReLU(),
+            nn.BatchNorm2d(32),
             nn.MaxPool2d(kernel_size = 2, stride = 2),
-            nn.Conv2d(6, 16, kernel_size = 5, padding = 1),
+
+            nn.Conv2d(32, 64, kernel_size = 3, padding = 1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size = 2, stride = 2),                
-            nn.Conv2d(16, 32, kernel_size = 5),
+            nn.BatchNorm2d(64),
+            nn.Conv2d(64, 64, kernel_size = 3, padding = 1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size = 2, stride = 2),                    
-        )
+            nn.BatchNorm2d(64),
+            nn.MaxPool2d(kernel_size = 2, stride = 2),
+            
+            nn.Conv2d(64, 128, kernel_size = 3, padding = 1),
+            nn.ReLU(),
+            nn.BatchNorm2d(128),
+            nn.Conv2d(128, 128, kernel_size = 3, padding = 1),
+            nn.ReLU(),
+            nn.BatchNorm2d(128),
+            nn.MaxPool2d(kernel_size = 2, stride = 2),            
+        )        
 
         self.classifier = nn.Sequential(
-            nn.Linear(32 * 1 * 1, 120),
+            nn.Dropout(0.2),
+            nn.Linear(self.features_output_dim, 1024),
             nn.ReLU(),
-            nn.Dropout(),
-            nn.Linear(120, 84),
-            nn.ReLU(),
-            nn.Dropout(),
-            nn.Linear(84, n_classes)
+            nn.Dropout(0.2),
+            nn.Linear(1024, n_classes)
         )

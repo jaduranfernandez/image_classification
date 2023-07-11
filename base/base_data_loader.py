@@ -14,3 +14,4 @@ class BaseDataLoader():
                                           shuffle=True, num_workers=num_workers)
         self.testloader = DataLoader(self.testset, batch_size=batch_size,shuffle=False, num_workers=num_workers)
         self.classes = self.trainset.classes
+        self.nClasses = len(self.classes)
