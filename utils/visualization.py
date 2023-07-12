@@ -18,3 +18,12 @@ def plot_confusion_mat(confusion_mat: np.ndarray, labels: list[str] = None):
     sn.heatmap(df_cm, annot=True)
     return plt
 
+
+def plot_lines(n_epochs: int, y_coord_train: np.array, y_coord_test: np.array, title: str):
+    epochs = np.arange(1,n_epochs+1)
+    plt.plot(epochs, y_coord_train, '-o', label = "Train")
+    plt.plot(epochs, y_coord_test, '-o',label = "Test")
+    plt.xticks(epochs)
+    plt.title(title)
+    plt.legend()
+    return plt

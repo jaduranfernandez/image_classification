@@ -27,11 +27,13 @@ class Trainer:
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
+            current_train_loss = loss.item()
+            correct += (pred.argmax(1) == y).type(torch.float).sum().item()
+            train_loss += current_train_loss
             if batch % 1000 == 0:
-                current_train_loss, current = loss.item(), batch * len(X)                
+                current = batch * len(X)
                 print(f"loss: {current_train_loss:>7f}  [{current:>5d}/{size:>5d}]")
-                correct += (pred.argmax(1) == y).type(torch.float).sum().item()
-                train_loss += current_train_loss
+                
         train_loss /= num_batches
         correct /= size
         metricsTracker.add_train_metrics(train_loss, correct)
@@ -40,7 +42,7 @@ class Trainer:
     def test(self, dataloader, metricsTracker):
         size = len(dataloader.dataset)
         num_batches = len(dataloader)
-        test_loss, correct = 0, 0        
+        test_loss, correct = 0, 0
         with torch.no_grad():
             for X, y in dataloader:                
                 X = X.to(self.device)

@@ -1,1 +1,1 @@
-from .cifar_10 import CifarDataLoader, cifar10_transform
+from .cifar_10 import CifarDataLoader, CifarSubsetLoader, cifar10_transform

@@ -1,5 +1,5 @@
 import numpy as np
-from utils import plot_confusion_mat
+from utils import plot_confusion_mat, plot_lines
 import matplotlib.pyplot as plt
 
 
@@ -46,5 +46,12 @@ class MetricsTracker():
 
     def plot_results(self, labels = None, save: bool = False):
         normalized_matrix = self.confusion_mat.astype('float') / self.confusion_mat.sum(axis=1)[:, np.newaxis]
-        plot_confusion_mat(normalized_matrix, labels = labels)
-        plt.show()    
+        figure = plot_confusion_mat(normalized_matrix, labels = labels)
+        figure.show()
+
+        figure_acc = plot_lines(self.n_epochs, self.accuracy_train, self.accuracy_test, "Accuracy")
+        figure_acc.show()
+        
+        figure_loss = plot_lines(self.n_epochs, self.loss_train, self.loss_test, "Loss")
+        figure_loss.show()
+        
